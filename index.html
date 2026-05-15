@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cristian González Barranco — Desarrollador Full Stack</title>
+  <meta name="description" content="Desarrollador Full Stack con 8 años de experiencia en Web, Desktop y Apps móviles. Puebla, México." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg:       #0D0D12;
+      --bg-2:     #141420;
+      --bg-card:  #1C1C2A;
+      --border:   rgba(255,255,255,0.07);
+      --purple:   #8B5CF6;
+      --blue:     #3B82F6;
+      --grad:     linear-gradient(135deg, #8B5CF6 0%, #3B82F6 100%);
+      --text:     #E8E6F0;
+      --muted:    #888AA0;
+      --dim:      #50516A;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 2.5rem;
+      background: rgba(13,13,18,0.75);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 500;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.25rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.85rem;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .lang-toggle {
+      display: flex;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .lang-btn {
+      padding: 0.3rem 0.75rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+    .lang-btn.active {
+      background: var(--grad);
+      color: #fff;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 7rem 2rem 5rem;
+      position: relative;
+      overflow: hidden;
+      background-image:
+        linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .hero-glow-1 {
+      position: absolute;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(139,92,246,0.13) 0%, transparent 65%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -55%);
+      pointer-events: none;
+    }
+    .hero-glow-2 {
+      position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(59,130,246,0.09) 0%, transparent 70%);
+      bottom: 5%; right: 5%;
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1.1rem;
+      border: 1px solid rgba(139,92,246,0.3);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      color: #C4B5FD;
+      background: rgba(139,92,246,0.06);
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 2.25rem;
+      animation: fadeUp 0.6s ease both;
+    }
+    .badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #22C55E;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .hero-name {
+      font-size: clamp(2.8rem, 6.5vw, 5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    .hero-name .grad {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-alias {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      color: var(--dim);
+      margin-bottom: 1.6rem;
+      animation: fadeUp 0.6s 0.15s ease both;
+    }
+
+    .hero-title {
+      font-size: clamp(1rem, 2.2vw, 1.25rem);
+      font-weight: 400;
+      color: var(--muted);
+      max-width: 580px;
+      margin: 0 auto 1rem;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-location {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.85rem;
+      color: var(--dim);
+      margin-bottom: 2.75rem;
+      animation: fadeUp 0.6s 0.25s ease both;
+    }
+    .hero-location svg { flex-shrink: 0; }
+
+    .hero-cta {
+      display: flex;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.8rem 1.85rem;
+      background: var(--grad);
+      color: #fff;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.82; transform: translateY(-2px); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.8rem 1.85rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--muted);
+      background: var(--bg-card);
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .btn-secondary:hover {
+      border-color: rgba(139,92,246,0.5);
+      color: var(--text);
+      transform: translateY(-2px);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── LAYOUT ── */
+    .section-wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 5.5rem 2rem;
+    }
+    .divider {
+      width: 100%; max-width: 1080px;
+      margin: 0 auto;
+      height: 1px;
+      background: var(--border);
+    }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--purple);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.65rem;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 3vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+      line-height: 1.15;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .about-text p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.85;
+      margin-bottom: 1.25rem;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem 1.25rem;
+      transition: border-color 0.2s;
+    }
+    .stat-card:hover { border-color: rgba(139,92,246,0.3); }
+    .stat-number {
+      font-size: 2.1rem;
+      font-weight: 900;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+      letter-spacing: -0.02em;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 2.25rem;
+    }
+    .skill-group-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--dim);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.65rem;
+    }
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .tag {
+      padding: 0.4rem 0.95rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .tag:hover {
+      border-color: rgba(139,92,246,0.4);
+      color: var(--text);
+      background: rgba(139,92,246,0.07);
+    }
+    .tag.hi {
+      border-color: rgba(139,92,246,0.3);
+      color: #C4B5FD;
+      background: rgba(139,92,246,0.08);
+    }
+
+    /* ── APPS ── */
+    .apps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .app-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.2s;
+    }
+    .app-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--grad);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .app-card:hover {
+      border-color: rgba(139,92,246,0.3);
+      transform: translateY(-3px);
+    }
+    .app-card:hover::after { opacity: 1; }
+
+    .app-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      margin-bottom: 1.4rem;
+      background: rgba(234,179,8,0.08);
+      color: #EAB308;
+      border: 1px solid rgba(234,179,8,0.2);
+    }
+    .app-status::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+      animation: pulse 2s infinite;
+    }
+
+    .app-icon {
+      width: 54px; height: 54px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 1.1rem;
+    }
+    .app-icon.finvia   { background: linear-gradient(135deg, #10B981, #059669); }
+    .app-icon.quiniela { background: linear-gradient(135deg, #3B82F6, #1D4ED8); }
+
+    .app-name {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 0.3rem;
+      letter-spacing: -0.01em;
+    }
+    .app-cat {
+      font-size: 0.78rem;
+      color: var(--purple);
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 0.85rem;
+    }
+    .app-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* ── EDUCATION ── */
+    .edu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+    .edu-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      transition: border-color 0.2s;
+    }
+    .edu-item:hover { border-color: rgba(139,92,246,0.2); }
+    .edu-icon {
+      width: 46px; height: 46px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      background: rgba(139,92,246,0.1);
+    }
+    .edu-name {
+      font-weight: 700;
+      font-size: 0.98rem;
+      margin-bottom: 0.2rem;
+    }
+    .edu-detail {
+      font-size: 0.83rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── CONTACT ── */
+    #contact-wrap { text-align: center; }
+    .contact-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 3.25rem 2rem;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+    .contact-desc {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      margin-bottom: 2.25rem;
+    }
+    .contact-links {
+      display: flex;
+      gap: 0.9rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .contact-link:hover {
+      border-color: rgba(139,92,246,0.45);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+    .contact-link svg { flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--dim);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .apps-grid  { grid-template-columns: 1fr; }
+      .section-wrap { padding: 4rem 1.25rem; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-logo">CGB.dev</div>
+  <ul class="nav-links">
+    <li><a href="#sobre-mi"><span data-es="Sobre mí" data-en="About">Sobre mí</span></a></li>
+    <li><a href="#habilidades"><span data-es="Habilidades" data-en="Skills">Habilidades</span></a></li>
+    <li><a href="#apps"><span data-es="Apps" data-en="Apps">Apps</span></a></li>
+    <li><a href="#contacto"><span data-es="Contacto" data-en="Contact">Contacto</span></a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('es')">ES</button>
+      <button class="lang-btn"        onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    <span data-es="Disponible para proyectos" data-en="Available for projects">Disponible para proyectos</span>
+  </div>
+
+  <h1 class="hero-name">
+    Cristian<br /><span class="grad">González Barranco</span>
+  </h1>
+
+  <p class="hero-alias">// GB Solutions Apps</p>
+
+  <p class="hero-title">
+    <span data-es="Desarrollador Full Stack · Líder Técnico · 8 años de experiencia"
+          data-en="Full Stack Developer · Technical Lead · 8 years of experience">
+      Desarrollador Full Stack · Líder Técnico · 8 años de experiencia
+    </span>
+  </p>
+
+  <p class="hero-location">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+      <circle cx="12" cy="10" r="3"/>
+    </svg>
+    <span data-es="Puebla, México" data-en="Puebla, Mexico">Puebla, México</span>
+  </p>
+
+  <div class="hero-cta">
+    <a href="#contacto" class="btn-primary">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+        <polyline points="22,6 12,13 2,6"/>
+      </svg>
+      <span data-es="Contáctame" data-en="Contact me">Contáctame</span>
+    </a>
+    <a href="https://github.com/cristianGonBar" target="_blank" rel="noopener" class="btn-secondary">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+      </svg>
+      <span data-es="Ver GitHub" data-en="View GitHub">Ver GitHub</span>
+    </a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── SOBRE MÍ ── -->
+<div id="sobre-mi" class="section-wrap">
+  <p class="section-label" data-es="// sobre mí" data-en="// about me">// sobre mí</p>
+  <h2 class="section-title">
+    <span data-es="Desarrollo software que funciona," data-en="I build software that works,">Desarrollo software que funciona,</span><br />
+    <span data-es="desde la idea hasta producción." data-en="from idea to production.">desde la idea hasta producción.</span>
+  </h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p data-es="Soy un Desarrollador de Software Full Stack con 8 años de experiencia construyendo aplicaciones Web, Desktop y Móviles. A lo largo de mi trayectoria he asumido roles de Líder Técnico, guiando equipos de desarrollo y apoyando en la definición de arquitecturas de sistemas robustos y escalables."
+         data-en="I'm a Full Stack Software Developer with 8 years of experience building Web, Desktop, and Mobile applications. Throughout my career I've taken on Technical Leadership roles, guiding development teams and supporting the definition of robust, scalable system architectures.">
+        Soy un Desarrollador de Software Full Stack con 8 años de experiencia construyendo aplicaciones Web, Desktop y Móviles. A lo largo de mi trayectoria he asumido roles de Líder Técnico, guiando equipos de desarrollo y apoyando en la definición de arquitecturas de sistemas robustos y escalables.
+      </p>
+      <p data-es="Tengo sólida experiencia en el despliegue de aplicaciones en servidores, automatización con GitHub Actions, orquestación de contenedores con Docker y manejo de múltiples herramientas del ecosistema moderno de desarrollo."
+         data-en="I have solid experience in application server deployment, automation with GitHub Actions, container orchestration with Docker, and proficiency across the modern development ecosystem's toolchain.">
+        Tengo sólida experiencia en el despliegue de aplicaciones en servidores, automatización con GitHub Actions, orquestación de contenedores con Docker y manejo de múltiples herramientas del ecosistema moderno de desarrollo.
+      </p>
+      <p data-es="Actualmente desarrollo apps móviles de manera independiente bajo mi marca GB Solutions Apps, buscando resolver problemas reales con software de calidad y buen diseño."
+         data-en="I currently build mobile apps independently under my GB Solutions Apps brand, aiming to solve real problems with quality software and thoughtful design.">
+        Actualmente desarrollo apps móviles de manera independiente bajo mi marca GB Solutions Apps, buscando resolver problemas reales con software de calidad y buen diseño.
+      </p>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">8+</div>
+        <div class="stat-label" data-es="Años de experiencia" data-en="Years of experience">Años de experiencia</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">3</div>
+        <div class="stat-label" data-es="Plataformas: Web, Desktop, Mobile" data-en="Platforms: Web, Desktop, Mobile">Plataformas: Web, Desktop, Mobile</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">2</div>
+        <div class="stat-label" data-es="Apps en desarrollo activo" data-en="Apps in active development">Apps en desarrollo activo</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">∞</div>
+        <div class="stat-label" data-es="Café consumido ☕" data-en="Coffee consumed ☕">Café consumido ☕</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── HABILIDADES ── -->
+<div id="habilidades" class="section-wrap">
+  <p class="section-label" data-es="// habilidades" data-en="// skills">// habilidades</p>
+  <h2 class="section-title" data-es="Stack tecnológico" data-en="Tech Stack">Stack tecnológico</h2>
+  <div class="skills-grid">
+
+    <div>
+      <div class="skill-group-label" data-es="Desarrollo" data-en="Development">Desarrollo</div>
+      <div class="skill-tags">
+        <span class="tag hi">Full Stack</span>
+        <span class="tag">Web</span>
+        <span class="tag">Desktop</span>
+        <span class="tag" data-es="Apps Móviles / Android" data-en="Mobile Apps / Android">Apps Móviles / Android</span>
+        <span class="tag">REST APIs</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="skill-group-label" data-es="Liderazgo & Arquitectura" data-en="Leadership & Architecture">Liderazgo & Arquitectura</div>
+      <div class="skill-tags">
+        <span class="tag hi" data-es="Líder Técnico" data-en="Technical Lead">Líder Técnico</span>
+        <span class="tag" data-es="Arquitectura de Aplicaciones" data-en="Application Architecture">Arquitectura de Aplicaciones</span>
+        <span class="tag" data-es="Equipos de Desarrollo" data-en="Development Teams">Equipos de Desarrollo</span>
+        <span class="tag">Code Review</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="skill-group-label">DevOps & Infraestructura</div>
+      <div class="skill-tags">
+        <span class="tag hi">Docker</span>
+        <span class="tag">GitHub Actions</span>
+        <span class="tag">CI/CD</span>
+        <span class="tag" data-es="Deploy en Servidores" data-en="Server Deployment">Deploy en Servidores</span>
+        <span class="tag">Git</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── APPS ── -->
+<div id="apps" class="section-wrap">
+  <p class="section-label" data-es="// proyectos" data-en="// projects">// proyectos</p>
+  <h2 class="section-title" data-es="Apps en desarrollo" data-en="Apps in development">Apps en desarrollo</h2>
+  <div class="apps-grid">
+
+    <div class="app-card">
+      <div class="app-status" data-es="En desarrollo" data-en="In development">En desarrollo</div>
+      <div class="app-icon finvia">💳</div>
+      <div class="app-name">Finvia</div>
+      <div class="app-cat" data-es="Finanzas Personales" data-en="Personal Finance">Finanzas Personales</div>
+      <p class="app-desc"
+         data-es="Aplicación móvil para el control inteligente de tarjetas de crédito y finanzas personales. Centraliza tus tarjetas, seguimiento de gastos, fechas de corte y pagos, todo en un solo lugar."
+         data-en="Mobile app for smart credit card management and personal finance. Centralize your cards, track expenses, billing dates, and payments — all in one place.">
+        Aplicación móvil para el control inteligente de tarjetas de crédito y finanzas personales. Centraliza tus tarjetas, seguimiento de gastos, fechas de corte y pagos, todo en un solo lugar.
+      </p>
+    </div>
+
+    <div class="app-card">
+      <div class="app-status" data-es="En desarrollo" data-en="In development">En desarrollo</div>
+      <div class="app-icon quiniela">⚽</div>
+      <div class="app-name">Quiniela MX</div>
+      <div class="app-cat" data-es="Entretenimiento · Deportes" data-en="Entertainment · Sports">Entretenimiento · Deportes</div>
+      <p class="app-desc"
+         data-es="App para organizar quinielas deportivas con amigos y familiares. Compatible con Liga MX, Champions League, Mundial 2026 y NFL. Compite, puntúa y disfruta cada jornada."
+         data-en="App for organizing sports pools with friends and family. Supports Liga MX, Champions League, World Cup 2026, and NFL. Compete, score, and enjoy every matchday.">
+        App para organizar quinielas deportivas con amigos y familiares. Compatible con Liga MX, Champions League, Mundial 2026 y NFL. Compite, puntúa y disfruta cada jornada.
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── FORMACIÓN ── -->
+<div id="formacion" class="section-wrap">
+  <p class="section-label" data-es="// formación" data-en="// education">// formación</p>
+  <h2 class="section-title" data-es="Educación & Aprendizaje continuo" data-en="Education & Continuous Learning">Educación &<br />Aprendizaje continuo</h2>
+  <div class="edu-list">
+
+    <div class="edu-item">
+      <div class="edu-icon">🎓</div>
+      <div>
+        <div class="edu-name" data-es="Ingeniería en Ciencias de la Computación" data-en="Computer Science Engineering">Ingeniería en Ciencias de la Computación</div>
+        <div class="edu-detail">BUAP — Benemérita Universidad Autónoma de Puebla · Puebla, México</div>
+      </div>
+    </div>
+
+    <div class="edu-item">
+      <div class="edu-icon">💻</div>
+      <div>
+        <div class="edu-name" data-es="Cursos de especialización" data-en="Specialization courses">Cursos de especialización</div>
+        <div class="edu-detail">Platzi · Udemy · <span data-es="Formación continua en tecnologías actuales" data-en="Ongoing training in current technologies">Formación continua en tecnologías actuales</span></div>
+      </div>
+    </div>
+
+    <div class="edu-item">
+      <div class="edu-icon">🎤</div>
+      <div>
+        <div class="edu-name" data-es="Congresos & Comunidad Tech" data-en="Tech Conferences & Community">Congresos & Comunidad Tech</div>
+        <div class="edu-detail" data-es="Participación activa en congresos y eventos de tecnología" data-en="Active participation in technology congresses and events">Participación activa en congresos y eventos de tecnología</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── CONTACTO ── -->
+<div id="contacto" class="section-wrap" id="contact-wrap">
+  <p class="section-label" data-es="// contacto" data-en="// contact">// contacto</p>
+  <h2 class="section-title" data-es="Hablemos" data-en="Let's talk">Hablemos</h2>
+  <div class="contact-card">
+    <p class="contact-desc"
+       data-es="¿Tienes un proyecto en mente o quieres colaborar? Estoy disponible para proyectos freelance, consultoría técnica o simplemente para platicar de tecnología."
+       data-en="Have a project in mind or want to collaborate? I'm open to freelance projects, technical consulting, or just a good tech conversation.">
+      ¿Tienes un proyecto en mente o quieres colaborar? Estoy disponible para proyectos freelance, consultoría técnica o simplemente para platicar de tecnología.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:gon.bar.azul@gmail.com" class="contact-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        gon.bar.azul@gmail.com
+      </a>
+      <a href="https://github.com/cristianGonBar" target="_blank" rel="noopener" class="contact-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+        github/cristianGonBar
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <span>© 2025 Cristian González Barranco · GB Solutions Apps · Puebla, México</span>
+</footer>
+
+<script>
+  function setLang(lang) {
+    document.querySelectorAll('[data-es]').forEach(el => {
+      const val = el.dataset[lang];
+      if (val !== undefined) el.textContent = val;
+    });
+    document.documentElement.lang = lang === 'es' ? 'es' : 'en';
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.trim() === lang.toUpperCase());
+    });
+    document.title = lang === 'es'
+      ? 'Cristian González Barranco — Desarrollador Full Stack'
+      : 'Cristian González Barranco — Full Stack Developer';
+  }
+</script>
+
+</body>
+</html>
